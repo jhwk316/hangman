@@ -30,7 +30,7 @@ module Text
     puts "Guessed so far: #{guesses}"
     puts
     puts "Strikes: #{strikes}"
-    puts "The secret word is: #{solved_word}"
+    puts "The secret word is: #{coded_word.join}"
   end
 
   def lose_game

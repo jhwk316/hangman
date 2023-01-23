@@ -31,7 +31,9 @@ class Game
   def guess_word
     puts
     puts "The secret_word has #{@coded_word.count} letters"
-    puts 'Please enter a letter'
+    match_text
+    puts 
+    puts "Please enter a letter -OR- Type 'save' to save the game"
     @guess = gets.chomp.downcase
     if guess.length == 1
       guesses << guess
@@ -46,7 +48,6 @@ class Game
     else # if no match
       @strikes += 1 unless guess.length > 1 || guesses.count(guess) > 1
     end
-    match_text
     save_game if guess.include?('save')
   end
   # end guess_word
@@ -56,7 +57,6 @@ class Game
     guesses
     guess_word until strikes == 8 || solved_word == new_word || game_saved == 'saved'
     if strikes == 8
-      coded_word = ''
       lose_game
     elsif solved_word == new_word
       win_game
@@ -71,8 +71,9 @@ class Game
     when 'y'
       @strikes = 0
       @guesses = []
-      secret_word
+     puts secret_word.join
       new_game
+      
     when 'n'
       puts 'Thanks for playing'
     else
