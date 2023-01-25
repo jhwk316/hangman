@@ -6,7 +6,8 @@ require_relative 'display_text'
 # Game Logic
 class Game
   include Text
-  attr_accessor :dictionary, :strikes, :guess, :new_word, :coded_word, :guesses, :game_saved, :solved_word, :response
+  attr_accessor :new_word
+  attr_reader :dictionary, :guess, :coded_word, :solved_word, :guesses, :strikes, :game_saved
 
   def initialize
     @dictionary = []
@@ -30,17 +31,10 @@ class Game
   # end secret_word
 
   def guess_word
-    puts
-    puts "The secret_word has #{@coded_word.count} letters"
     match_text
-    puts
-    puts "Please enter a letter -OR- Type 'save' to save the game"
     @guess = gets.chomp.downcase
-    if guess.length == 1
-      guesses << guess
-    elsif guess.length > 1
-      too_many_characters
-    end
+    puts '***ONLY 1 LETTER PER GUESS. PLEASE TRY AGAIN!***' if guess.length > 1 && guess != 'save'
+    guesses << guess unless guess.length > 1
     if @new_word.include?(guess) # if a match
       @coded_word = @new_word.chars.map do |x|
         guesses.join.include?(x) ? guesses.join.replace(x) : x.replace('_')
@@ -64,10 +58,11 @@ class Game
     end
     play_again if strikes == 8 || solved_word == new_word
   end
+  # end new_game
 
   def play_again
     puts 'Play again?'
-    @response = gets.chomp.downcase
+    response = gets.chomp.downcase
     case response
     when 'y'
       @strikes = 0
@@ -80,6 +75,7 @@ class Game
       play_again
     end
   end
+  # end play_again
 
   def save_game
     puts 'Do you wish to save your game? [Y/N]?'
@@ -94,6 +90,7 @@ class Game
       new_game
     end
   end
+  # end save_game
 
   def load_game
     if File.exist?('game_saves/hangman.yml')
@@ -102,17 +99,10 @@ class Game
       case response
       when 'Y'
         file = YAML.safe_load(File.read('game_saves/hangman.yml'), permitted_classes: [Game])
-        @dictionary = file.dictionary
         @strikes = file.strikes
         @guesses = file.guesses
         @coded_word = file.coded_word
-        @solved_word = file.solved_word
         @new_word = file.new_word
-        puts 'Game loaded from save'
-        puts "Guessed so far: #{guesses}"
-        puts
-        puts "Strikes: #{@strikes}"
-        puts "The secret word is: #{@solved_word}"
         new_game
         @game_saved = ''
       when 'N'

@@ -21,16 +21,17 @@ module Text
     puts
   end
 
-  def too_many_characters
-    puts 'Only 1 letter per guess. Try again'
-  end
-
   def match_text
+    puts
+    puts "The secret_word has #{@coded_word.count} letters"
     puts
     puts "Guessed so far: #{guesses}"
     puts
     puts "Strikes: #{strikes}"
     puts "The secret word is: #{coded_word.join}"
+    puts
+    puts "Please enter a letter -OR- Type 'save' to save the game"
+
   end
 
   def lose_game
