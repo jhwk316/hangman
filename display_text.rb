@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
-
-
+# Text Displayed during game play
 module Text
-
   def intro
     puts
     puts '*****Welcome to Hangman*****'
-    puts 
+    puts
     puts '**********  RULES **********'
     puts '--- Can you guess the secret word?'
     puts '--- You will have 8 attempts to guess all the right letters'
@@ -22,7 +22,7 @@ module Text
   end
 
   def too_many_characters
-      puts "Only 1 letter per guess. Try again"
+    puts 'Only 1 letter per guess. Try again'
   end
 
   def match_text
@@ -35,14 +35,14 @@ module Text
 
   def lose_game
     puts
-    puts "😵️ ☠️ 😵️ YOU DIED 😵️ ☠️ 😵️"
+    puts '😵️ ☠️ 😵️ YOU DIED 😵️ ☠️ 😵️'
     puts "The secret_word was: #{new_word}" if strikes == 8
     puts
   end
 
   def win_game
     puts
-    puts "😃️😃️😃️ YOU ESCAPED THE HANGMAN!!! 😃️😃️😃️"
+    puts '😃️😃️😃️ YOU ESCAPED THE HANGMAN!!! 😃️😃️😃️'
     puts
   end
 end

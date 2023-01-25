@@ -3,6 +3,7 @@
 require 'yaml'
 require_relative 'display_text'
 
+# Game Logic
 class Game
   include Text
   attr_accessor :dictionary, :strikes, :guess, :new_word, :coded_word, :guesses, :game_saved, :solved_word, :response
@@ -32,7 +33,7 @@ class Game
     puts
     puts "The secret_word has #{@coded_word.count} letters"
     match_text
-    puts 
+    puts
     puts "Please enter a letter -OR- Type 'save' to save the game"
     @guess = gets.chomp.downcase
     if guess.length == 1
@@ -71,9 +72,8 @@ class Game
     when 'y'
       @strikes = 0
       @guesses = []
-     puts secret_word.join
+      puts secret_word.join
       new_game
-      
     when 'n'
       puts 'Thanks for playing'
     else
